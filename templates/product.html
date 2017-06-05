@@ -1,10 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load staticfiles %}
 
-</body>
-</html>
+{% block title %}
+    <title>PAPS | {{ product.name }}</title>
+{% endblock %}
+
+{% block content %}
+    <h2 >{{ product.name }}</h2>
+        <div class="media">
+            <div class="media-left">
+                <a href="{% url 'product' product.slug %}">
+                    <img class="media-object" style="height: 170px; width: 280px"
+                         src="{{ product.image.url }}" alt="...">
+                </a>
+            </div>
+            <div class="media-body">
+                <h3 style="    color: red; margin: 40px 0;" class="media-heading">{{ product.price }} грн.</h3>
+
+                <a href="{% url 'add_to_basket' %}?id={{ product.id }}&cont=1" class="btn btn-info"> Додати в корзину</a>
+                <a href="{% url 'add_to_basket' %}?id={{ product.id }}" class="btn btn-danger"> Замовити</a>
+            </div>
+        </div>
+        <hr>
+    <h3>Характеристики:</h3>
+    <p>{{ product.description }}</p>
+    <a style="font-size: 16px" onclick="window.history.back()"><-- Назад</a>
+{% endblock %}
+

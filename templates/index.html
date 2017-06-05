@@ -6,7 +6,43 @@
 {% endblock %}
 
 {% block content %}
-
-
+    <h2 style="text-align: center">Продукти:</h2>
+    {% for product in products %}
+        <div class="media">
+            <div class="media-left">
+                <a href="{% url 'product' product.slug %}">
+                    <img class="media-object" style="height: 170px; width: 280px"
+                         src="{{ product.image.url }}" alt="...">
+                </a>
+            </div>
+            <div class="media-body">
+                <h4 class="media-heading">{{ product.name }}</h4>
+                <p>{{ product.description }}</p>
+                <a href="{% url 'product' product.slug %}" class="btn btn-info"> Детальніше</a>
+            </div>
+        </div>
+        <hr>
+    {% endfor %}
+    {% if products.has_other_pages %}
+        <ul class="pagination">
+            {% if products.has_previous %}
+                <li><a href="?page={{ products.previous_page_number }}">&laquo;</a></li>
+            {% else %}
+                <li class="disabled"><span>&laquo;</span></li>
+            {% endif %}
+            {% for i in products.paginator.page_range %}
+                {% if products.number == i %}
+                    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                {% else %}
+                    <li><a href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
+            {% endfor %}
+            {% if products.has_next %}
+                <li><a href="?page={{ products.next_page_number }}">&raquo;</a></li>
+            {% else %}
+                <li class="disabled"><span>&raquo;</span></li>
+            {% endif %}
+        </ul>
+    {% endif %}
 {% endblock %}
 

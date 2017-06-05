@@ -1,10 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load staticfiles %}
 
-</body>
-</html>
+{% block title %}
+    <title>PAPS | Корзина</title>
+{% endblock %}
+
+{% block content %}
+    <h2 style="text-align: center">Товари в корзині:</h2>
+    {% for product in products %}
+        <h4>{{ product.name }} <span style="float: right">{{ product.price }} грн | <a href="{% url 'delete_from_basket' %}?id={{ product.id }}">Відмінити</a></span></h4>
+    {% endfor %}
+
+    <h2 style="margin-top: 50px;">Загалом: <span style="color: #d9230f">{{ price }} грн</span>
+        {% if price > 0 %}
+            <a href="{% url 'finish' %}" class="btn btn-info" style=" float: right">Завершити покупку</a>
+        {% endif %}
+    </h2>
+
+{% endblock %}
+

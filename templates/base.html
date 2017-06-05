@@ -34,22 +34,52 @@
                 <li><a href="#">Про нас</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Корзина</a></li>
-                <li><button type="button" class="btn btn-default navbar-btn">Sign in</button></li>
+                {% if request.user.is_authenticated %}
+                <li><a href="{% url 'basket' %}">Корзина ({{ basket }}) </a></li>
+                <li><a>{{ request.user.email }}</a></li>
+                <li><button type="button" class="btn btn-default navbar-btn">Вихід</button></li>
+                {% else %}
+                <li><a href="{% url 'login' %}" class="btn btn-default navbar-btn">Sign in</a></li>
+                {% endif %}
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
-<div>
-    <div></div>
-    <div>
-        {% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-0 col-sm-3 col-lg-2 left_col">
+            <div class="panel panel-default" style="height: calc(100% - 20px);">
+                <div class="panel-heading">Категорії</div>
+                <div class="panel-body">
+                    <ul style="list-style-type: none;">
+                        {% for category in categories %}
+                            {% if category == active_category %}
+                                <li style="color:#d9230f">{{ category.name }}</li>
+                            {% else %}
+                                <li><a style="color: #777777;" href="{% url 'category' category.slug %}">{{ category.name }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-9 col-lg-10 right-col" style="min-height: 700px">
+            {% block content %}
 
 
-        {% endblock %}
+            {% endblock %}
+        </div>
     </div>
 </div>
+<footer style="height: 50px; background-color: #7d7d7d; text-align: center; padding-top: 13px">
+    <a style="color: white; font-size: 16px">Звязок з нами</a>
+</footer>
 <script src="{% static 'js/jquery.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script>
+    $(function () {
+        $('.left_col').height($('.right-col').height());
+    })
+</script>
 </body>
 </html>
