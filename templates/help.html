@@ -1,0 +1,20 @@
+{% extends 'regbase.html' %}
+{% load i18n %}
+
+{% block container %}
+<div class="content">
+
+   <div class = "form-group">
+      <label for = "name">Введіть ваш відгук</label>
+      <textarea class = "form-control" id="area" rows = "3"></textarea>
+   </div>
+    <button class="btn btn-default" id="btn">Надіслати</button>
+</div>
+    <script>
+        $(function () {
+            $('#btn').click(function () {
+                location.href = '/save-messages?message=' + $('#area')[0].value;
+            })
+        })
+    </script>
+{% endblock %}

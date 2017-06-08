@@ -1,8 +1,10 @@
+# -*- encoding: utf-8 -*-
 from django.shortcuts import render, redirect
 from django.db.models import Sum
-from models import Product, Category, Basket
+from models import Product, Category, Basket, Message
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-
+from django.core.files import File
+import datetime
 # Create your views here.
 
 
@@ -89,13 +91,28 @@ def delete_from_basket(request):
 
 
 def finish(request):
+    with open('paps/static/media/receipt.txt', 'w') as f:
+        myfile = File(f)
+        products = Product.objects.filter(id__in=Basket.objects.filter(user=request.user)
+                                          .values_list('product_id', flat=True))
+        if not len(products):
+            return redirect('/')
+        total_price = products.aggregate(sum=Sum('price')).get('sum')
+        for prod in products:
+            str_t = '%s - %s\n' % (str(prod.name), str(prod.price))
+            myfile.write(str_t)
+        str_t = '-'*15 + '\n'
+        myfile.write(str_t)
+        myfile.write('TOTAL - %s\n' % str(total_price))
+        myfile.write('Time - %s' % str(datetime.datetime.now()))
+        Basket.objects.filter(user=request.user).delete()
+        return redirect('/media/receipt.txt')
 
+def help(request):
+    return render(request, 'help.html', {})
+
+
+def help_mes(request):
+    message = request.GET.get('message')
+    Message.objects.create(text=message)
     return redirect('/')
-
-
-def login(request):
-    return render(request, 'login.html', {})
-
-
-def register(request):
-    return render(request, 'register.html', {})

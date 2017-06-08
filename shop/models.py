@@ -51,3 +51,7 @@ class Product(models.Model):
 class Basket(models.Model):
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
+
+
+class Message(models.Model):
+    text=models.TextField(max_length=500)

@@ -1,0 +1,74 @@
+{% load staticfiles %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Bootstrap, from Twitter</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sample of Twitter Bootstrap for Django Registration">
+    <meta name="author" content="Ezequiel Bertti">
+    <!-- Le styles -->
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+</head>
+
+<body>
+
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">PAPS</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Головна <span class="sr-only">(current)</span></a></li>
+                <li><a href="#">Про нас</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if request.user.is_authenticated %}
+                    <li><a href="{% url 'basket' %}">Корзина ({{ basket }}) </a></li>
+                    <li><a>{{ request.user.email }}</a></li>
+                    <li><a href="/logout/" class="btn btn-default navbar-btn">Вихід</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}" class="btn btn-default navbar-btn">Вхід</a></li>
+                {% endif %}
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<div class="container" style="min-height: 700px">
+    {% block container %}
+        <div class="content">
+            <div class="page-header">
+
+            </div>
+            <ul>
+            </ul>
+        </div>
+    {% endblock %}
+    <hr>
+</div> <!-- /container -->
+
+    <footer style="height: 50px; background-color: #7d7d7d; text-align: center; padding-top: 13px">
+        <a style="color: white; font-size: 16px">Звязок з нами</a>
+    </footer>
+<!-- using microsoft CDN just because have a lot of haters on github hahahha -->
+
+
+</body>
+</html>

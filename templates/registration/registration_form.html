@@ -1,0 +1,17 @@
+{% extends "regbase.html" %}
+{% block container %}
+<h1>Реєстрація</h1>
+<form method="post" action="">
+<dl class="register">
+{% for field in form %}
+     {% csrf_token %}
+    <dt>{{ field.label_tag }}</dt>
+    <dd class="clearfix">{{ field }}
+    {% if field.help_text %}<div class="clearfix">{{ field.help_text |safe}}</div>{% endif %}
+    {% if field.errors %}<div class="myerrors clearfix">{{ field.errors|safe }}</div>{% endif %}
+    </dd>
+{% endfor %}
+</dl>
+<input type="submit" value="Зареєструватись" / class="clearfix">
+</form>
+{% endblock %}

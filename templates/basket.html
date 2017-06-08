@@ -13,7 +13,8 @@
 
     <h2 style="margin-top: 50px;">Загалом: <span style="color: #d9230f">{{ price }} грн</span>
         {% if price > 0 %}
-            <a href="{% url 'finish' %}" class="btn btn-info" style=" float: right">Завершити покупку</a>
+            <a href="{% url 'finish' %}" class="btn btn-info" style=" float: right">Cформувати чек</a>
+            <a href="https://www.privat24.ua/#login" class="btn btn-info" style=" float: right; margin-right: 10px;">Оплата</a>
         {% endif %}
     </h2>
 

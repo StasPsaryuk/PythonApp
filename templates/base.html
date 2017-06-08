@@ -31,15 +31,15 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="#">Головна <span class="sr-only">(current)</span></a></li>
-                <li><a href="#">Про нас</a></li>
+                <li><a href="/help">Тех підтримка</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if request.user.is_authenticated %}
                 <li><a href="{% url 'basket' %}">Корзина ({{ basket }}) </a></li>
                 <li><a>{{ request.user.email }}</a></li>
-                <li><button type="button" class="btn btn-default navbar-btn">Вихід</button></li>
+                <li><a href="{% url 'logout' %}" class="btn btn-default navbar-btn">Вихід</a></li>
                 {% else %}
-                <li><a href="{% url 'login' %}" class="btn btn-default navbar-btn">Sign in</a></li>
+                <li><a href="{% url 'login' %}" class="btn btn-default navbar-btn">Вхід</a></li>
                 {% endif %}
             </ul>
         </div><!-- /.navbar-collapse -->
